@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>МаминWord — редактор документов Word</title>
+<link rel="icon" href="static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="static/app.css">
+</head>
+<body>
+<header class="titlebar">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="3" fill="#fff" opacity=".18"/><path d="M6 7.5h1.9l1.4 6.2 1.6-6.2h1.8l1.6 6.2 1.4-6.2H18l-2.4 9h-1.8l-1.7-6.1-1.7 6.1H8.6z" fill="#fff"/></svg>
+    <span>МаминWord</span>
+  </div>
+  <label class="filename" title="Имя файла при сохранении">
+    <input id="fileName" type="text" value="Новый документ.docx" spellcheck="false" autocomplete="off">
+  </label>
+  <span id="dirtyMark" class="dirty" hidden>• изменён</span>
+  <div class="actions">
+    <button id="btnNew" class="ghost" type="button" title="Новый документ">Новый</button>
+    <button id="btnOpen" class="ghost" type="button" title="Открыть .docx (Ctrl+O)">Открыть…</button>
+    <button id="btnPrint" class="ghost" type="button" title="Печать или сохранение в PDF (Ctrl+P)">Печать / PDF</button>
+    <button id="btnSave" class="primary" type="button" title="Скачать документ .docx (Ctrl+S)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Скачать .docx
+    </button>
+  </div>
+  <input id="fileInput" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+</header>
+
+<main class="workspace">
+  <textarea id="editor"></textarea>
+
+  <section id="welcome" class="welcome" hidden>
+    <div class="welcome-card">
+      <div class="welcome-icon">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 4h17l11 11v27a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="#e8effa" stroke="#2b579a" stroke-width="2"/><path d="M29 4v11h11" fill="none" stroke="#2b579a" stroke-width="2"/><path d="M16 24h2.2l1.7 7.4 2-7.4h2.2l2 7.4 1.7-7.4H30l-2.9 11h-2.2l-2-7.3-2 7.3h-2.2z" fill="#2b579a"/></svg>
+      </div>
+      <h1>Откройте документ Word</h1>
+      <p>Перетащите файл <b>.docx</b> в это окно или выберите его на компьютере. Отредактируйте и нажмите <b>«Скачать .docx»</b> — получите готовый файл для Word.</p>
+      <div class="welcome-actions">
+        <button id="wOpen" class="primary big" type="button">Выбрать файл .docx</button>
+        <button id="wNew" class="ghost-dark big" type="button">Создать новый</button>
+      </div>
+      <p class="hint">Файл обрабатывается только для редактирования и нигде не хранится.</p>
+    </div>
+  </section>
+
+  <div id="dropZone" class="dropzone" hidden><div>Отпустите файл, чтобы открыть</div></div>
+  <div id="busy" class="busy"><div class="spinner"></div><span id="busyText">Загружаю редактор…</span></div>
+</main>
+
+<footer class="statusbar">
+  <span id="stPage">Страница 1 из 1</span>
+  <span id="stWords">Число слов: 0</span>
+  <span id="stStyle" title="Стиль текущего абзаца">Стиль: Обычный</span>
+  <span class="spacer"></span>
+  <span id="stPageSize" class="muted"></span>
+  <div class="zoom">
+    <button id="zoomOut" type="button" title="Уменьшить">−</button>
+    <input id="zoomRange" type="range" min="50" max="200" step="10" value="100" aria-label="Масштаб">
+    <button id="zoomIn" type="button" title="Увеличить">+</button>
+    <span id="zoomVal">100%</span>
+  </div>
+</footer>
+
+<script src="static/tinymce-bundle.js" onerror="document.getElementById('busyText').textContent='Не удалось загрузить редактор — обновите страницу (F5).'"></script>
+<script src="static/app.js"></script>
+</body>
+</html>

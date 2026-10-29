@@ -1,0 +1,5 @@
+*.wasm binary
+*.whl binary
+*.zip binary
+*.docx binary
+*.bat text eol=crlf

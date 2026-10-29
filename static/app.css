@@ -1,0 +1,197 @@
+:root {
+  --brand: #2b579a;
+  --brand-dark: #1e3f73;
+  --brand-ink: #ffffff;
+  --bg: #e9eaec;
+  --panel: #ffffff;
+  --text: #1f2328;
+  --muted: #5f6873;
+  --line: #d6d9de;
+  --focus: #9cc0f5;
+  --status-bg: #f3f4f6;
+  --danger: #b42318;
+  /* редактор и лист документа светлые, как в Word, поэтому оболочка тоже всегда светлая */
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; margin: 0; }
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------- заголовок */
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 6px 12px;
+  background: var(--brand);
+  color: var(--brand-ink);
+  flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; letter-spacing: .2px; }
+.brand svg { width: 24px; height: 24px; }
+.filename { flex: 1 1 220px; max-width: 460px; min-width: 140px; }
+.filename input {
+  width: 100%;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  font: inherit;
+  text-overflow: ellipsis;
+}
+.filename input:hover { background: rgba(255,255,255,.18); }
+.filename input:focus { outline: none; border-color: rgba(255,255,255,.7); background: rgba(255,255,255,.22); }
+.dirty { font-size: 12px; opacity: .85; white-space: nowrap; }
+.actions { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+button { font: inherit; cursor: pointer; }
+button.ghost {
+  padding: 6px 12px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+}
+button.ghost:hover { background: rgba(255,255,255,.14); }
+button.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--brand-dark);
+  font-weight: 600;
+}
+button.primary:hover { background: #eef3fb; }
+button.primary svg { width: 16px; height: 16px; }
+button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---------------------------------------------------------- рабочая область */
+.workspace { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.workspace .tox-tinymce { flex: 1 1 auto; border: 0 !important; border-radius: 0 !important; }
+.tox .tox-toolbar__group { padding: 0 4px !important; }
+.tox .tox-tbtn--select { min-width: 0; }
+
+.welcome {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(233, 234, 236, .86);
+  backdrop-filter: blur(2px);
+}
+.welcome-card {
+  width: min(520px, 100%);
+  padding: 32px 28px 24px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: 0 10px 30px rgba(20, 30, 50, .14);
+  text-align: center;
+}
+.welcome-icon svg { width: 64px; height: 64px; }
+.welcome h1 { margin: 10px 0 8px; font-size: 22px; font-weight: 600; }
+.welcome p { margin: 0 0 18px; color: var(--muted); }
+.welcome .hint { margin: 16px 0 0; font-size: 12px; }
+.welcome-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+button.big { padding: 10px 18px; font-size: 15px; }
+.welcome button.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.welcome button.primary:hover { background: var(--brand-dark); }
+button.ghost-dark {
+  padding: 10px 18px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+}
+button.ghost-dark:hover { background: rgba(0,0,0,.05); }
+
+.dropzone {
+  position: absolute;
+  inset: 10px;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  border: 3px dashed var(--brand);
+  border-radius: 12px;
+  background: rgba(43, 87, 154, .1);
+  color: var(--brand-dark);
+  font-size: 20px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.busy {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255,255,255,.6);
+  font-size: 15px;
+}
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid #c9d6ea;
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------------------------------------------------------- строка состояния */
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 28px;
+  padding: 2px 12px;
+  border-top: 1px solid var(--line);
+  background: var(--status-bg);
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.statusbar .spacer { flex: 1; }
+.statusbar .muted { opacity: .85; }
+.zoom { display: flex; align-items: center; gap: 6px; }
+.zoom button {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1;
+}
+.zoom button:hover { background: rgba(0,0,0,.08); }
+.zoom input { width: 110px; accent-color: var(--brand); }
+#zoomVal { min-width: 38px; text-align: right; }
+
+@media (max-width: 720px) {
+  .titlebar { gap: 8px; }
+  .brand span { display: none; }
+  .actions { width: 100%; margin-left: 0; }
+  .actions button { flex: 1 1 auto; }
+  #stStyle, #stPageSize { display: none; }
+  .zoom input { width: 70px; }
+}

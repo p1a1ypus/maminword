@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+
+# ссылка текущего туннеля — у каждого запуска своя
+link.txt
+
+# документы пользователей и тестовые файлы (шаблон нового документа — нужен)
+*.docx
+*.doc
+!templates/blank.docx
+
+# секреты и ключи — никогда в репозиторий
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+secrets*
+credentials*
+
+# служебное
+.claude/
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
